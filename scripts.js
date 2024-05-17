@@ -1,16 +1,20 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
 
+// Initialize state variables
 let page = 1;
 let matches = books;
 
+// Function to render book previews
 const renderBookPreviews = (books, containerElement) => {
   const fragment = document.createDocumentFragment();
 
+  // Loop through the provided books
   for (const { author, id, image, title } of books) {
     const element = document.createElement('button');
     element.classList.add('preview');
     element.setAttribute('data-preview', id);
 
+    // Created the HTML for each book preview
     element.innerHTML = `
       <img
         class="preview__image"
@@ -29,6 +33,7 @@ const renderBookPreviews = (books, containerElement) => {
   containerElement.appendChild(fragment);
 };
 
+// Function to render options (genres or authors) in a dropdown
 const renderOptions = (data, containerElement, defaultOption) => {
   const fragment = document.createDocumentFragment();
 
@@ -55,12 +60,14 @@ const applyTheme = (theme) => {
   document.documentElement.style.setProperty('--color-light', isDarkMode ? '10, 10, 20' : '255, 255, 255');
 };
 
+// Function to initialize the user interface
 const initializeUI = () => {
   const listItems = document.querySelector('[data-list-items]');
   const genreSelect = document.querySelector('[data-search-genres]');
   const authorSelect = document.querySelector('[data-search-authors]');
   const listButton = document.querySelector('[data-list-button]');
 
+  // Functions to render the initial book previews, genres and author select
   renderBookPreviews(matches.slice(0, BOOKS_PER_PAGE), listItems);
   renderOptions(genres, genreSelect, 'All Genres');
   renderOptions(authors, authorSelect, 'All Authors');
@@ -177,6 +184,7 @@ const handlePreviewClick = (event) => {
 
 initializeUI();
 
+// Event handler functions 
 document.querySelector('[data-search-cancel]').addEventListener('click', handleSearchCancel);
 document.querySelector('[data-settings-cancel]').addEventListener('click', handleSettingsCancel);
 document.querySelector('[data-header-search]').addEventListener('click', handleHeaderSearch);
